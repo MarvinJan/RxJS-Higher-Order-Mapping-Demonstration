@@ -1,4 +1,8 @@
-<h2 class="title">Every second event gets delayed by 1 sec</h2>
+<h2 class="title">
+  Every <span class="delayed">EVEN </span>value is emmited with 1 second delay
+  <p></p>
+  Every <span class="instant">ODD</span> value emitted instantly
+</h2>
 <p>
   <label>
     mergeMap <br />
@@ -37,7 +41,7 @@
     <span
       *ngFor="let res of arr"
       class="map-result"
-      [ngStyle]="{ 'background-color': res === 0 ? '#ff7129' : '#29b4ff' }"
+      [ngClass]="res === 0 ? 'delayed' : 'instant'"
     >
     </span>
   </div>

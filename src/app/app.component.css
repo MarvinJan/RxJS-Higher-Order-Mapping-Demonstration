@@ -1,6 +1,19 @@
 .title {
   font-family: sans-serif;
 }
+.delayed {
+  background-color: #ff7129;
+  color: #ff7129;
+}
+.instant {
+  background-color: #29b4ff;
+  color: #29b4ff;
+}
+.title .instant,
+.title .delayed {
+  background-color: unset;
+  font-weight: bold;
+}
 .result-container {
   display: flex;
   align-items: center;
