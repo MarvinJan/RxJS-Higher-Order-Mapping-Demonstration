@@ -1,0 +1,15 @@
+.title {
+  font-family: sans-serif;
+}
+.result-container {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 20px;
+  margin-bottom: 10px;
+}
+.map-result {
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+}
