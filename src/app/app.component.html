@@ -37,11 +37,11 @@
     <span
       *ngFor="let res of arr"
       class="map-result"
-      [ngStyle]="{ 'background-color': res === 0 ? '#2975d7' : '#52c452' }"
+      [ngStyle]="{ 'background-color': res === 0 ? '#ff7129' : '#29b4ff' }"
     >
     </span>
   </div>
   <div>
-    <button (click)="arr.length = 0">reset</button>
+    <button class="reset" (click)="arr.length = 0">reset</button>
   </div>
 </ng-template>

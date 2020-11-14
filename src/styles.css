@@ -1,1 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background: #ededed;
+  color: #595959;
+  margin: 0;
+  padding: 2vh;
+  box-sizing: border-box;
+  font-family: "Arial";
+}
+p {
+  margin-bottom: 0;
+}
+app-root {
+  width: 320px;
+}

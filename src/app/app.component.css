@@ -4,12 +4,44 @@
 .result-container {
   display: flex;
   align-items: center;
-  gap: 3px;
-  height: 20px;
-  margin-bottom: 10px;
+  gap: 5px;
+  height: 40px;
+  padding: 5px;
+  width: 320px;
+  overflow: hidden;
+  box-sizing: border-box;
+  background-color: #2f2f2b;
 }
 .map-result {
   width: 20px;
   height: 20px;
   border-radius: 10px;
+  flex-shrink: 1;
+  min-width: 1px;
+}
+.reset {
+  padding: 5px 10px;
+  width: 320px;
+  height: 40px;
+  margin-top: 20px;
+  background-color: #29b4ff;
+  outline: none;
+  border: none;
+  color: #eee;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+input {
+  border: none;
+  padding: 5px 10px;
+  /* border-radius: 3px; */
+  outline: none;
+  width: 320px;
+  margin-top: 3px;
+  box-sizing: border-box;
+  border: 3px solid #2f2f2b;
+  border-bottom: none;
+  height: 40px;
 }
