@@ -1,6 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
-import { fromEvent, of } from 'rxjs';
-import { mergeMap, delay, map, concatMap, switchMap } from 'rxjs/operators';
+import { fromEvent, of, Subject } from 'rxjs';
+import {
+  mergeMap,
+  delay,
+  map,
+  concatMap,
+  switchMap,
+  takeUntil,
+} from 'rxjs/operators';
 
 enum EMITED_VAL_TYPE {
   delayed,
@@ -28,6 +35,18 @@ export class AppComponent {
     switchMap: [],
   };
 
+  resets = {
+    mergeMap: new Subject(),
+    concatMap: new Subject(),
+    switchMap: new Subject(),
+  };
+
+  resetObservable(operator: string) {
+    this[operator + 'Input'].nativeElement.value = '';
+    this.results[operator].length = 0;
+    this.resets[operator].next(null);
+  }
+
   ngAfterViewInit() {
     const isEven = (i) => (i + 1) % 2 === 0;
     const mapFn = (ev) => (<any>ev).currentTarget.value;
@@ -42,17 +61,29 @@ export class AppComponent {
       switchMap: this.switchMapInput,
     };
 
-    (<any>Object).entries(operatorsMapping).forEach(([key, value]) => {
+    (<any>Object).entries(operatorsMapping).forEach(([operator, value]) => {
       const operatorFn =
-        key === 'mergeMap'
+        operator === 'mergeMap'
           ? mergeMap
-          : key === 'concatMap'
+          : operator === 'concatMap'
           ? concatMap
           : switchMap;
 
-      fromEvent(value.nativeElement, 'input')
-        .pipe(map(mapFn), operatorFn(higherMapFn))
-        .subscribe((v) => this.results[key].push(v));
+      const inputObservableWithReset = () => {
+        return fromEvent(value.nativeElement, 'input')
+          .pipe(
+            map(mapFn),
+            operatorFn(higherMapFn),
+            takeUntil(this.resets[operator])
+          )
+          .subscribe(
+            (v) => this.results[operator].push(v),
+            () => {},
+            () => inputObservableWithReset()
+          );
+      };
+
+      inputObservableWithReset();
     });
   }
 }

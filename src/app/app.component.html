@@ -11,7 +11,7 @@
 </p>
 
 <ng-container
-  *ngTemplateOutlet="operatorResult; context: { $implicit: results.mergeMap }"
+  *ngTemplateOutlet="operatorResult; context: { $implicit: 'mergeMap' }"
 ></ng-container>
 
 <p>
@@ -22,7 +22,7 @@
 </p>
 
 <ng-container
-  *ngTemplateOutlet="operatorResult; context: { $implicit: results.concatMap }"
+  *ngTemplateOutlet="operatorResult; context: { $implicit: 'concatMap' }"
 ></ng-container>
 
 <p>
@@ -33,19 +33,19 @@
 </p>
 
 <ng-container
-  *ngTemplateOutlet="operatorResult; context: { $implicit: results.switchMap }"
+  *ngTemplateOutlet="operatorResult; context: { $implicit: 'switchMap' }"
 ></ng-container>
 
-<ng-template #operatorResult let-arr>
+<ng-template #operatorResult let-operator>
   <div class="result-container">
     <span
-      *ngFor="let res of arr"
+      *ngFor="let res of results[operator]"
       class="map-result"
       [ngClass]="res === 0 ? 'delayed' : 'instant'"
     >
     </span>
   </div>
   <div>
-    <button class="reset" (click)="arr.length = 0">reset</button>
+    <button class="reset" (click)="resetObservable(operator)">reset</button>
   </div>
 </ng-template>
