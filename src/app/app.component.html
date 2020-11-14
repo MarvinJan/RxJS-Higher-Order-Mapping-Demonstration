@@ -45,6 +45,14 @@
     >
     </span>
   </div>
+  <div class="result-container delayed-container">
+    <span
+      *ngFor="let delayedQueue of delayedQueue[operator]"
+      class="map-result"
+      [ngClass]="delayedQueue === 0 ? 'delayed' : 'instant'"
+    >
+    </span>
+  </div>
   <div>
     <button class="reset" (click)="resetObservable(operator)">reset</button>
   </div>

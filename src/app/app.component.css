@@ -34,7 +34,10 @@
   background-color: #ff7129;
   animation: appear-from-bottom 0.1s;
 }
-
+.delayed-container .instant {
+  background-color: unset;
+  animation: none;
+}
 .map-result {
   width: 20px;
   height: 20px;
