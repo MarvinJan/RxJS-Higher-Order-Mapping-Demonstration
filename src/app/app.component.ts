@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { fromEvent, of, Subject } from 'rxjs';
+import { fromEvent, interval, of, Subject } from 'rxjs';
 import {
   mergeMap,
   delay,
@@ -7,6 +7,8 @@ import {
   concatMap,
   switchMap,
   takeUntil,
+  delayWhen,
+  finalize,
 } from 'rxjs/operators';
 
 enum EMITED_VAL_TYPE {
@@ -68,22 +70,20 @@ export class AppComponent {
           : operator === 'concatMap'
           ? concatMap
           : switchMap;
+      const subscribeFn = (v) => this.results[operator].push(v);
 
-      const inputObservableWithReset = () => {
-        return fromEvent(value.nativeElement, 'input')
-          .pipe(
-            map(mapFn),
-            operatorFn(higherMapFn),
-            takeUntil(this.resets[operator])
-          )
-          .subscribe(
-            (v) => this.results[operator].push(v),
-            () => {},
-            () => inputObservableWithReset()
-          );
+      const resettableObservable = () => {
+        const reset = () => resettableObservable().subscribe(subscribeFn);
+
+        return fromEvent(value.nativeElement, 'input').pipe(
+          map(mapFn),
+          operatorFn(higherMapFn),
+          takeUntil(this.resets[operator]),
+          finalize(reset)
+        );
       };
 
-      inputObservableWithReset();
+      resettableObservable().subscribe(subscribeFn);
     });
   }
 }
